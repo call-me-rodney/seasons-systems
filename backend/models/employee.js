@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     role: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('user', 'admin'),
       allowNull: false,
     },
     dateOfHire: {
@@ -34,7 +34,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     department: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('HR', 'equipment', 'inventory', 'sales', 'field', 'crop', 'livestock', 'procurement'),
       allowNull: false,
     },
   }, {
