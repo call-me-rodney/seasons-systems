@@ -13,6 +13,15 @@ import SalesForm from '../components/SalesForm';
 import SalesDetailsForm from '../components/SalesDetailsForm';
 import SupplierForm from '../components/SupplierForm';
 import ResupplyForm from '../components/ResupplyForm';
+import EmployeeTable from '../components/EmployeeTable';
+import CropTable from '../components/CropTable';
+import FieldTable from '../components/FieldTable';
+import LivestockTable from '../components/LivestockTable';
+import PenTable from '../components/PenTable';
+import EquipmentTable from '../components/EquipmentTable';
+import InventoryTable from '../components/InventoryTable';
+import SalesTable from '../components/SalesTable';
+import SalesDetailsTable from '../components/SalesDetailsTable';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -25,6 +34,9 @@ const Dashboard = () => {
   const [loadingSuppliers, setLoadingSuppliers] = useState(true);
   const [errorSuppliers, setErrorSuppliers] = useState(null);
   const [isResupplyModalOpen, setIsResupplyModalOpen] = useState(false);
+  const [resupplies, setResupplies] = useState([]);
+  const [loadingResupplies, setLoadingResupplies] = useState(true);
+  const [errorResupplies, setErrorResupplies] = useState(null);
   const [isSupplierModalOpen, setIsSupplierModalOpen] = useState(false);
 
   const [equipment, setEquipment] = useState([]);
@@ -41,8 +53,14 @@ const Dashboard = () => {
   const [loadingLivestock, setLoadingLivestock] = useState(true);
   const [errorLivestock, setErrorLivestock] = useState(null);
   const [isPenModalOpen, setIsPenModalOpen] = useState(false);
+  const [pens, setPens] = useState([]);
+  const [loadingPens, setLoadingPens] = useState(true);
+  const [errorPens, setErrorPens] = useState(null);
   const [isLivestockModalOpen, setIsLivestockModalOpen] = useState(false);
   const [isCropModalOpen, setIsCropModalOpen] = useState(false);
+  const [crops, setCrops] = useState([]);
+  const [loadingCrops, setLoadingCrops] = useState(true);
+  const [errorCrops, setErrorCrops] = useState(null);
 
   const [sales, setSales] = useState([]);
   const [loadingSales, setLoadingSales] = useState(true);
@@ -85,6 +103,18 @@ const Dashboard = () => {
         }
       };
       fetchSuppliers();
+
+      const fetchResupplies = async () => {
+        try {
+          const response = await getResupplies();
+          setResupplies(response.data);
+        } catch (err) {
+          setErrorResupplies(err);
+        } finally {
+          setLoadingResupplies(false);
+        }
+      };
+      fetchResupplies();
     }
 
     if (user && user.department === 'equipment') {
@@ -125,6 +155,18 @@ const Dashboard = () => {
         }
       };
       fetchLivestock();
+
+      const fetchCrops = async () => {
+        try {
+          const response = await getCrops();
+          setCrops(response.data);
+        } catch (err) {
+          setErrorCrops(err);
+        } finally {
+          setLoadingCrops(false);
+        }
+      };
+      fetchCrops();
     }
 
     if (user && user.department === 'sales') {
@@ -184,7 +226,7 @@ const Dashboard = () => {
                   <h4 className="text-sm font-medium text-gray-500">Total Sales</h4>
                   <p className="mt-2 text-3xl font-bold text-seasons-green">{sales.length}</p>
                 </div>
-                            {/* Add more sales specific data here */}
+                                                    <SalesTable sales={sales} />
             <div className="mt-6">
               <button
                 onClick={() => setIsSalesModalOpen(true)}
@@ -218,7 +260,7 @@ const Dashboard = () => {
             {!loadingSalesDetails && !errorSalesDetails && (
               <div className="bg-white p-6 rounded-lg shadow">
                 <h4 className="text-lg font-medium text-gray-900 mb-4">Sales Details</h4>
-                            {/* Sales Details List/Table will go here */}
+                                        <SalesDetailsTable salesDetails={salesDetails} />
             <div className="mt-6">
               <button
                 onClick={() => setIsSalesDetailsModalOpen(true)}
@@ -272,7 +314,7 @@ const Dashboard = () => {
                 </div>
               </div>
             )}
-                        {/* Employee List/Table will go here */}
+                                    <EmployeeTable employees={employees} />
             <div className="mt-6">
               <button
                 onClick={() => setIsModalOpen(true)}
@@ -314,7 +356,7 @@ const Dashboard = () => {
                   <h4 className="text-sm font-medium text-gray-500">Total Suppliers</h4>
                   <p className="mt-2 text-3xl font-bold text-seasons-green">{suppliers.length}</p>
                 </div>
-                                        {/* Add more procurement specific data here */}
+                                                                <SupplierTable suppliers={suppliers} />
             <div className="mt-6">
               <button
                 onClick={() => setIsResupplyModalOpen(true)}
@@ -331,12 +373,11 @@ const Dashboard = () => {
                 const fetchResupplies = async () => {
                   try {
                     const response = await getResupplies();
-                    // Assuming you have a resupplies state
-                    // setResupplies(response.data);
+                    setResupplies(response.data);
                   } catch (err) {
-                    // setErrorResupplies(err);
+                    setErrorResupplies(err);
                   } finally {
-                    // setLoadingResupplies(false);
+                    setLoadingResupplies(false);
                   }
                 };
                 fetchResupplies();
@@ -389,7 +430,7 @@ const Dashboard = () => {
                   <h4 className="text-sm font-medium text-gray-500">In Use</h4>
                   <p className="mt-2 text-3xl font-bold text-seasons-orange">{equipment.filter(eq => eq.isInUse).length}</p>
                 </div>
-                            {/* Add more equipment specific data here */}
+                                        <EquipmentTable equipment={equipment} />
             <div className="mt-6">
               <button
                 onClick={() => setIsEquipmentModalOpen(true)}
@@ -433,7 +474,7 @@ const Dashboard = () => {
                   <h4 className="text-sm font-medium text-gray-500">Active Fields</h4>
                   <p className="mt-2 text-3xl font-bold text-seasons-green">{fields.filter(f => f.isActive).length}</p>
                 </div>
-                                        {/* Add more field specific data here */}
+                                                    <FieldTable fields={fields} />
             <div className="mt-6">
               <button
                 onClick={() => setIsFieldModalOpen(true)}
@@ -476,12 +517,11 @@ const Dashboard = () => {
                 const fetchCrops = async () => {
                   try {
                     const response = await getCrops();
-                    // Assuming you have a crops state
-                    // setCrops(response.data);
+                    setCrops(response.data);
                   } catch (err) {
-                    // setErrorCrops(err);
+                    setErrorCrops(err);
                   } finally {
-                    // setLoadingCrops(false);
+                    setLoadingCrops(false);
                   }
                 };
                 fetchCrops();
@@ -497,7 +537,7 @@ const Dashboard = () => {
                   <h4 className="text-sm font-medium text-gray-500">Total Livestock</h4>
                   <p className="mt-2 text-3xl font-bold text-seasons-orange">{livestock.length}</p>
                 </div>
-                                        {/* Add more livestock specific data here */}
+                                                    <LivestockTable livestock={livestock} />
             <div className="mt-6">
               <button
                 onClick={() => setIsPenModalOpen(true)}
@@ -514,8 +554,7 @@ const Dashboard = () => {
                 const fetchPens = async () => {
                   try {
                     const response = await getPens();
-                    // Assuming you have a pens state
-                    // setPens(response.data);
+                    setPens(response.data);
                   } catch (err) {
                     // setErrorPens(err);
                   } finally {
@@ -568,7 +607,7 @@ const Dashboard = () => {
                   <h4 className="text-sm font-medium text-gray-500">Total Inventory Items</h4>
                   <p className="mt-2 text-3xl font-bold text-seasons-green">{inventory.length}</p>
                 </div>
-                            {/* Add more inventory specific data here */}
+                                        <InventoryTable inventory={inventory} />
             <div className="mt-6">
               <button
                 onClick={() => setIsInventoryModalOpen(true)}
