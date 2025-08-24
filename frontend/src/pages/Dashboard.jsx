@@ -213,6 +213,10 @@ const Dashboard = () => {
   const renderDashboardContent = () => {
     if (!user) return null;
 
+    if (user.role === 'superAdmin') {
+      return <Navigate to="/super-admin" replace />;
+    }
+
     switch (user.department) {
       case 'sales':
         return (

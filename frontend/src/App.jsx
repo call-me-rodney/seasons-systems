@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
 import Chat from './pages/Chat';
 import Planner from './pages/Planner';
+import SuperAdminDashboard from './pages/SuperAdminDashboard';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -63,6 +64,16 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Layout>
               <Planner />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/super-admin"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <SuperAdminDashboard />
             </Layout>
           </ProtectedRoute>
         }

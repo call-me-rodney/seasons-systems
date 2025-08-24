@@ -14,6 +14,7 @@ import salesdetails from './salesdetails.js'
 import supplier from './supplier.js'
 import resupply from './resupply.js'
 import planner from './planner.js'
+import superAdmin from './superAdmin.js'
 
 router.use('/auth', auth);
 router.use('/employees', employee);
@@ -28,5 +29,6 @@ router.use('/salesdetails', salesdetails);
 router.use('/suppliers', supplier);
 router.use('/resupplies', resupply);
 router.use('/planner', planner);
+router.use('/super-admin', superAdmin);
 
 export default router;
