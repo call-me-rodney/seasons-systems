@@ -3,12 +3,13 @@ import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginForm from './components/LoginForm';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
+import Settings from './pages/Settings';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
-  const { user, loading } = useAuth();
+  const { user, loading, isInitialized } = useAuth();
   
-  if (loading) {
+  if (loading || !isInitialized) {
     return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
   }
   
@@ -30,6 +31,16 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Layout>
               <Dashboard />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Settings />
             </Layout>
           </ProtectedRoute>
         }
