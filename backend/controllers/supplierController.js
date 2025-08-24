@@ -1,6 +1,8 @@
-import db from '../models/index.js';
+import dbPromise from '../models/index.js';
 import logger from '../utils/logger.js';
-const Supplier = db.Supplier;
+
+const db = await dbPromise;
+const { Supplier } = db;
 
 export const getAll = async (req, res) => {
   try {

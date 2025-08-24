@@ -1,7 +1,8 @@
-import db from '../models/index.js';
+import dbPromise from '../models/index.js';
 import logger from '../utils/logger.js';
-const Pen = db.Pen;
 
+const db = await dbPromise;
+const { Pen } = db;
 export const getAll = async (req, res) => {
   try {
     const pens = await Pen.findAll();
