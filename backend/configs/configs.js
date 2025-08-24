@@ -1,13 +1,18 @@
+import dotenv from 'dotenv';
 import { fileURLToPath } from 'url';
 import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+dotenv.config({
+  path: path.resolve(__dirname, '../../.env')
+});
+
 const configs = {
   // Database Configuration
   database: {
-    url: 'postgresql://neondb_owner:npg_jHu4aAlE5zfg@ep-winter-moon-a2joa7eq-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require',
+    url: process.env.DATABASE_URL,
     ssl: {
       require: true,
       rejectUnauthorized: false
@@ -16,40 +21,41 @@ const configs = {
 
   // Redis Configuration
   redis: {
-    host: 'redis',
-    port: 6379,
-    url: `redis://redis:6379`
+    host: process.env.REDIS_HOST || 'redis',
+    port: parseInt(process.env.REDIS_PORT) || 6379,
+    url: `redis://${process.env.REDIS_HOST || 'redis'}:${process.env.REDIS_PORT || 6379}`
   },
 
   // Ollama Configuration
   ollama: {
-    host: 'ollama',
-    port: 11434,
-    url: `http://ollama:11434`
+    host: process.env.OLLAMA_HOST || 'ollama',
+    port: parseInt(process.env.OLLAMA_PORT) || 11434,
+    url: `http://${process.env.OLLAMA_HOST || 'ollama'}:${process.env.OLLAMA_PORT || 11434}`
   },
 
   // Server Configuration
   server: {
-    port: 4000,
-    environment: 'development',
-    isProduction: false,
-    isDevelopment: true,
-    isTest: false
+    port: parseInt(process.env.PORT) || 4000,
+    environment: process.env.NODE_ENV || 'development',
+    isProduction: process.env.NODE_ENV === 'production',
+    isDevelopment: process.env.NODE_ENV === 'development',
+    isTest: process.env.NODE_ENV === 'test'
   },
 
   // API Configuration
   api: {
-    baseUrl: 'http://localhost:4000'
+    baseUrl: process.env.VITE_API_URL || 'http://localhost:4000'
   },
 
   // Authentication Configuration
   auth: {
-    jwtSecret: 'your-secure-secret-key-here',
-    jwtExpiresIn: '1d',
+    jwtSecret: process.env.JWT_SECRET || 'your-default-secret-key',
+    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
     bcryptSaltRounds: 10
   }
 };
 
 export default configs;
+
 
 
