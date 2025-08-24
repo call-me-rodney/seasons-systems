@@ -9,8 +9,8 @@ const Layout = ({ children }) => {
   const navigationTabs = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'analytics', label: 'Analytics', icon: '📈' },
-    { id: 'chat', label: 'Seasons Chat', icon: '💬' },
-    { id: 'planner', label: 'Seasons Planner', icon: '📅' },
+    { id: 'chat', label: 'Seasons Chat', icon: '💬', path: '/chat' },
+    { id: 'planner', label: 'Seasons Planner', icon: '📅', path: '/planner' },
     { id: 'settings', label: 'Settings', icon: '⚙️', path: '/settings' },
   ];
 

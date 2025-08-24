@@ -118,4 +118,7 @@ export const createResupply = (data) => api.post('/resupplies', data);
 export const updateResupply = (id, data) => api.put(`/resupplies/${id}`, data);
 export const deleteResupply = (id) => api.delete(`/resupplies/${id}`);
 
+// Planner Endpoints
+export const generatePlannerSuggestion = (prompt) => api.post('/planner/suggest', { prompt });
+
 export default api;
