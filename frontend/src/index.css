@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-seasons-green: #4ade80;
+  --color-seasons-orange: #fb923c;
+  --color-seasons-white: #ffffff;
+}
 
 /* Custom styles for Seasons Systems */
 @layer base {
