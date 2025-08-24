@@ -1,5 +1,6 @@
 import { useAuth } from '../context/AuthContext';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Layout = ({ children }) => {
   const { user, logout } = useAuth();
@@ -10,7 +11,7 @@ const Layout = ({ children }) => {
     { id: 'analytics', label: 'Analytics', icon: '📈' },
     { id: 'chat', label: 'Seasons Chat', icon: '💬' },
     { id: 'planner', label: 'Seasons Planner', icon: '📅' },
-    { id: 'settings', label: 'Settings', icon: '⚙️' },
+    { id: 'settings', label: 'Settings', icon: '⚙️', path: '/settings' },
   ];
 
   const handleLogout = () => {
@@ -27,18 +28,19 @@ const Layout = ({ children }) => {
         
         <nav className="mt-8">
           {navigationTabs.map((tab) => (
-            <button
+            <Link
               key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              to={tab.path || '/'}
               className={`w-full flex items-center px-4 py-3 text-left hover:bg-gray-50 transition-colors ${
                 activeTab === tab.id
                   ? 'bg-seasons-green text-white'
                   : 'text-gray-700'
               }`}
+              onClick={() => setActiveTab(tab.id)}
             >
               <span className="mr-3">{tab.icon}</span>
               {tab.label}
-            </button>
+            </Link>
           ))}
         </nav>
       </div>
