@@ -30,7 +30,7 @@ export default (sequelize, DataTypes) => {
     // Supplier hasMany Equipment
     Supplier.hasMany(models.Equipment, { foreignKey: 'supplierID', as: 'equipment' });
     // Supplier hasMany Resupply
-    Supplier.hasMany(models.Resupply, { foreignKey: 'supplierID', as: 'resupplies' });
+    Supplier.hasMany(models.Resupply, { foreignKey: 'supplierID', as: 'resupply' });
   };
 
   return Supplier;

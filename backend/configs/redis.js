@@ -1,5 +1,5 @@
 import { createClient } from 'redis';
-import configs from './configs';
+import configs from './configs.js';
 
 const redisClient = createClient({
   url: configs.redis.url,

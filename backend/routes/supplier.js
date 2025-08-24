@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as supplierController from '../controllers/supplierController';
+import * as supplierController from '../controllers/supplierController.js';
 import auth from '../middleware/auth.js';
 import role from '../middleware/role.js';
 import department from '../middleware/department.js';

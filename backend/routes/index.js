@@ -1,18 +1,18 @@
 import express from 'express';
 const router = express.Router();
 
-import auth from './auth'
-import employee from './employee'
-import crop from './crop'
-import livestock from './livestock'
-import field from './field'
-import pen from './pen'
-import equipment from './equipment'
-import inventory from './inventory'
-import sales from './sales'
-import salesdetails from './salesdetails'
-import supplier from './supplier'
-import resupply from './resupply'
+import auth from './auth.js'
+import employee from './employee.js'
+import crop from './crop.js'
+import livestock from './livestock.js'
+import field from './field.js'
+import pen from './pen.js'
+import equipment from './equipment.js'
+import inventory from './inventory.js'
+import sales from './sales.js'
+import salesdetails from './salesdetails.js'
+import supplier from './supplier.js'
+import resupply from './resupply.js'
 
 router.use('/auth', auth);
 router.use('/employees', employee);

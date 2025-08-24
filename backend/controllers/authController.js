@@ -1,7 +1,8 @@
-import { Employee } from '../models';
+import db from '../models/index.js';
+const { Employee } = db;
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import configs from '../configs/configs';
+import configs from '../configs/configs.js';
 import logger from '../utils/logger.js';
 
 export default {

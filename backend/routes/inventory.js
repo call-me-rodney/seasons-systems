@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as inventoryController from '../controllers/inventoryController';
+import * as inventoryController from '../controllers/inventoryController.js';
 import auth from '../middleware/auth.js';
 import role from '../middleware/role.js';
 import department from '../middleware/department.js';

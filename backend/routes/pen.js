@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import * as penController from '../controllers/penController';
+import * as penController from '../controllers/penController.js';
 import auth from '../middleware/auth.js';
 import role from '../middleware/role.js';
 import department from '../middleware/department.js';

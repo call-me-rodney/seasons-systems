@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
-import { sequelize } from './models';
+import { fileURLToPath } from 'url';
+import path from 'path';
 
-// Load environment variables
-dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 
@@ -19,6 +19,7 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-app.use('/api', require('./routes'));
+import routes from './routes/index.js';
+app.use('/api', routes);
 
 export default app;
