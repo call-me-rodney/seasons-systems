@@ -13,6 +13,7 @@ import sales from './sales.js'
 import salesdetails from './salesdetails.js'
 import supplier from './supplier.js'
 import resupply from './resupply.js'
+import planner from './planner.js'
 
 router.use('/auth', auth);
 router.use('/employees', employee);
@@ -26,5 +27,6 @@ router.use('/sales', sales);
 router.use('/salesdetails', salesdetails);
 router.use('/suppliers', supplier);
 router.use('/resupplies', resupply);
+router.use('/planner', planner);
 
 export default router;
