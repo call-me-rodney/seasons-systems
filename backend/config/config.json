@@ -1,6 +1,6 @@
 {
   "development": {
-    "use_env_variable": "DATABASE_URL",
+    "url": "postgresql://neondb_owner:npg_jHu4aAlE5zfg@ep-winter-moon-a2joa7eq-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -10,7 +10,7 @@
     }
   },
   "test": {
-    "use_env_variable": "DATABASE_URL",
+    "url": "postgresql://neondb_owner:npg_jHu4aAlE5zfg@ep-winter-moon-a2joa7eq-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
@@ -20,7 +20,7 @@
     }
   },
   "production": {
-    "use_env_variable": "DATABASE_URL",
+    "url": "postgresql://neondb_owner:npg_jHu4aAlE5zfg@ep-winter-moon-a2joa7eq-pooler.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
