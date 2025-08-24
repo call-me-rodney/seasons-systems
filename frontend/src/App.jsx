@@ -4,6 +4,8 @@ import LoginForm from './components/LoginForm';
 import Layout from './components/Layout';
 import Dashboard from './pages/Dashboard';
 import Settings from './pages/Settings';
+import Chat from './pages/Chat';
+import Planner from './pages/Planner';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
@@ -41,6 +43,26 @@ const AppRoutes = () => {
           <ProtectedRoute>
             <Layout>
               <Settings />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/chat"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Chat />
+            </Layout>
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/planner"
+        element={
+          <ProtectedRoute>
+            <Layout>
+              <Planner />
             </Layout>
           </ProtectedRoute>
         }
