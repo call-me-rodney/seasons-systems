@@ -51,8 +51,8 @@ const ResupplyForm = ({ resupply, onClose, onSuccess }) => {
         <input type="date" name="requestDate" id="requestDate" value={formData.requestDate} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
       </div>
       <div>
-        <label htmlFor="itemID" className="block text-sm font-medium text-gray-700">Item ID</label>
-        <input type="number" name="itemID" id="itemID" value={formData.itemID} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+        <label htmlFor="item" className="block text-sm font-medium text-gray-700">Equipment ID</label>
+        <input type="number" name="item" id="item" value={formData.item} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
       </div>
       <div>
         <label htmlFor="supplierID" className="block text-sm font-medium text-gray-700">Supplier ID</label>
