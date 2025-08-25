@@ -159,23 +159,9 @@ npx sequelize-cli db:seed:all
 4. Add tests if applicable
 5. Submit a pull request
 
-## 📄 License
-
-This project is licensed under the ISC License.
-
 ## 🤝 Support
 
 For support and questions:
 - Create an issue in the repository
 - Check the documentation
 - Review the API documentation in `API_DOCS.md`
-
-## 🔮 Roadmap
-
-- [ ] Mobile application
-- [ ] Advanced analytics and reporting
-- [ ] Integration with external agricultural APIs
-- [ ] Multi-language support
-- [ ] Advanced AI features and machine learning
-- [ ] Real-time collaboration tools
-- [ ] Advanced notification system
