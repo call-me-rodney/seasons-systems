@@ -1,4 +1,4 @@
-import { generateOllamaResponse } from '../services/ollamaService.js';
+import { generateGeminiResponse } from '../services/geminiService.js';
 import logger from '../utils/logger.js';
 
 export const getPlannerSuggestion = async (req, res) => {
@@ -8,8 +8,8 @@ export const getPlannerSuggestion = async (req, res) => {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    const ollamaResponse = await generateOllamaResponse(prompt);
-    res.json({ suggestion: ollamaResponse });
+    const geminiResponse = await generateGeminiResponse(prompt);
+    res.json({ suggestion: geminiResponse });
     logger.info('Planner suggestion generated successfully');
   } catch (error) {
     logger.error(`Error getting planner suggestion: ${error.message}`);

@@ -27,11 +27,7 @@ const configs = {
   },
 
   // Ollama Configuration
-  ollama: {
-    host: process.env.OLLAMA_HOST || 'ollama',
-    port: parseInt(process.env.OLLAMA_PORT) || 11434,
-    url: `http://${process.env.OLLAMA_HOST || 'ollama'}:${process.env.OLLAMA_PORT || 11434}`
-  },
+  
 
   // Server Configuration
   server: {
@@ -48,10 +44,16 @@ const configs = {
   },
 
   // Authentication Configuration
+  // Authentication Configuration
   auth: {
-    jwtSecret: process.env.JWT_SECRET || 'your-default-secret-key',
-    jwtExpiresIn: process.env.JWT_EXPIRES_IN || '1d',
+    jwtSecret: 'your-secure-secret-key-here',
+    jwtExpiresIn: '1d',
     bcryptSaltRounds: 10
+  },
+
+  // Google Gemini Configuration
+  gemini: {
+    apiKey: process.env.GEMINI_API_KEY || 'YOUR_GEMINI_API_KEY',
   }
 };
 
