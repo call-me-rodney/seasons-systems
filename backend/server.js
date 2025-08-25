@@ -52,7 +52,7 @@ const PORT = configs.server.port;
     });
 
   } catch (err) {
-    logger.error('Unable to connect to the database:', err);
+    logger.error('Something went wrong while starting the server', err);
     process.exit(1);
   }
 })();

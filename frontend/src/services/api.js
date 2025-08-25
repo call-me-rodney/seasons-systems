@@ -118,6 +118,14 @@ export const createResupply = (data) => api.post('/resupplies', data);
 export const updateResupply = (id, data) => api.put(`/resupplies/${id}`, data);
 export const deleteResupply = (id) => api.delete(`/resupplies/${id}`);
 
+// Super Admin Endpoints
+export const getAllUsers = () => api.get('/super-admin');
+export const getUserById = (id) => api.get(`/super-admin/${id}`);
+export const createUser = (data) => api.post('/super-admin', data);
+export const updateUser = (id, data) => api.put(`/super-admin/${id}`, data);
+export const deleteUser = (id) => api.delete(`/super-admin/${id}`);
+export const getAggregatedAnalytics = () => api.get('/super-admin/analytics');
+
 // Planner Endpoints
 export const generatePlannerSuggestion = (prompt) => api.post('/planner/suggest', { prompt });
 

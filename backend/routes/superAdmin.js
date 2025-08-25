@@ -13,5 +13,6 @@ router.get('/:id', superAdminController.getUserById);
 router.post('/', superAdminController.createUser);
 router.put('/:id', superAdminController.updateUser);
 router.delete('/:id', superAdminController.deleteUser);
+router.get('/analytics', superAdminController.getAggregatedAnalytics);
 
 export default router;

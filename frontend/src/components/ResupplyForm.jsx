@@ -4,11 +4,11 @@ import { createResupply, updateResupply } from '../services/api';
 const ResupplyForm = ({ resupply, onClose, onSuccess }) => {
   const [formData, setFormData] = useState({
     requestDate: resupply?.requestDate ? resupply.requestDate.split('T')[0] : '',
-    itemID: resupply?.itemID || '',
-    supplierID: resupply?.supplierID || '',
-    quantity: resupply?.quantity || '',
-    unitPrice: resupply?.unitPrice || '',
-    subtotal: resupply?.subtotal || '',
+    item: resupply?.item || 0,
+    supplierID: resupply?.supplierID || 0,
+    quantity: resupply?.quantity || 0,
+    unitPrice: resupply?.unitPrice || 0,
+    subtotal: resupply?.subtotal || 0,
     deliveryDate: resupply?.deliveryDate ? resupply.deliveryDate.split('T')[0] : '',
     invoiceNo: resupply?.invoiceNo || '',
   });
@@ -16,10 +16,10 @@ const ResupplyForm = ({ resupply, onClose, onSuccess }) => {
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target; // Added 'type'
     setFormData((prevData) => ({
       ...prevData,
-      [name]: value,
+      [name]: type === 'number' ? parseFloat(value) : value, // Parse numbers
     }));
   };
 
@@ -33,6 +33,7 @@ const ResupplyForm = ({ resupply, onClose, onSuccess }) => {
         await updateResupply(resupply.requestID, formData);
       } else {
         await createResupply(formData);
+        console.log(formData);
       }
       onSuccess();
       onClose();

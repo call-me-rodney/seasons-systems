@@ -12,6 +12,7 @@ import InventoryForm from '../components/InventoryForm';
 import SalesForm from '../components/SalesForm';
 import SalesDetailsForm from '../components/SalesDetailsForm';
 import SupplierForm from '../components/SupplierForm';
+import SupplierTable from '../components/SupplierTable';
 import ResupplyForm from '../components/ResupplyForm';
 import EmployeeTable from '../components/EmployeeTable';
 import CropTable from '../components/CropTable';

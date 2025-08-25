@@ -1,5 +1,7 @@
 import dbPromise from '../models/index.js';
 import logger from '../utils/logger.js';
+import bcrypt from 'bcrypt';
+import configs from '../configs/configs.js';
 
 const db = await dbPromise;
 const { Employee } = db;
@@ -33,8 +35,20 @@ export const getById = async (req, res) => {
 
 export const create = async (req, res) => {
   try {
-    const employee = await Employee.create(req.body);
-    res.status(201).json(employee);
+    const { password, ...employeeData } = req.body;
+    
+    // Hash the password if provided
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, configs.auth.bcryptSaltRounds);
+      employeeData.password = hashedPassword;
+    }
+    
+    const employee = await Employee.create(employeeData);
+    
+    // Remove password from response for security
+    const { password: _, ...employeeResponse } = employee.toJSON();
+    
+    res.status(201).json(employeeResponse);
     logger.info('Employee created successfully');
   } catch (error) {
     res.status(500).json({ error: error.message });
