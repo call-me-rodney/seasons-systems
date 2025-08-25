@@ -52,7 +52,7 @@ const PORT = configs.server.port;
     });
 
   } catch (err) {
-    logger.error('Something went wrong while starting the server', err);
+    logger.error('Something went wrong while starting the server:', err);
     process.exit(1);
   }
 })();
