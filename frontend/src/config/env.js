@@ -2,6 +2,7 @@
 export const config = {
   // API Configuration
   apiUrl: import.meta.env.VITE_API_URL || 'http://localhost:4000/api',
+  backendUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000',
   
   // Environment
   nodeEnv: import.meta.env.VITE_NODE_ENV || 'development',
