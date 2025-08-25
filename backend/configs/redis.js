@@ -1,7 +1,7 @@
 import { createClient } from 'redis';
 import configs from './configs.js';
 
-const client = createClient({
+const redisClient = createClient({
     username: configs.redis.username,
     password: configs.redis.password,
     socket: {
