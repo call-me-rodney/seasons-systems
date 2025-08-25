@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { config } from '../config/env'
 
 const ChatWindow = () => {
   const { user } = useAuth();
@@ -9,7 +10,7 @@ const ChatWindow = () => {
 
   useEffect(() => {
     // Connect to WebSocket
-    ws.current = new WebSocket('ws://localhost:4000'); // Assuming WebSocket runs on the same port as HTTP
+    ws.current = new WebSocket(config.backendUrl); // Assuming WebSocket runs on the same port as HTTP
 
     ws.current.onopen = () => {
       console.log('WebSocket connected');
