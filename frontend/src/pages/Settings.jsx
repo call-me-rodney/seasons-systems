@@ -8,6 +8,7 @@ const Settings = () => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
     contact: user?.contact || '',
+    department: user?.department || '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

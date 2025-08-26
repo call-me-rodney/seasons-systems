@@ -1,5 +1,6 @@
 import { useAuth } from '../context/AuthContext';
 import { useState, useEffect } from 'react';
+import { Navigate } from 'react-router-dom';
 import { getEmployees, getSuppliers, getEquipment, getFields, getLivestock, getSales, getSalesDetails, getInventory, getCrops } from '../services/api';
 import FormModal from '../components/FormModal';
 import EmployeeForm from '../components/EmployeeForm';
@@ -319,7 +320,7 @@ const Dashboard = () => {
                 </div>
               </div>
             )}
-                                    <EmployeeTable employees={employees} />
+            <EmployeeTable employees={employees} />
             <div className="mt-6">
               <button
                 onClick={() => setIsModalOpen(true)}
