@@ -9,10 +9,10 @@ const router = Router();
 router.use(auth, role(['superAdmin']));
 
 router.get('/', superAdminController.getAllUsers);
+router.get('/analytics', superAdminController.getAggregatedAnalytics);
 router.get('/:id', superAdminController.getUserById);
 router.post('/', superAdminController.createUser);
 router.put('/:id', superAdminController.updateUser);
 router.delete('/:id', superAdminController.deleteUser);
-router.get('/analytics', superAdminController.getAggregatedAnalytics);
 
 export default router;
