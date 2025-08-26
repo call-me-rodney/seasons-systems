@@ -8,6 +8,7 @@ const Settings = () => {
   const [formData, setFormData] = useState({
     name: user?.name || '',
     contact: user?.contact || '',
+    department: user?.department || '',
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -64,24 +65,24 @@ const Settings = () => {
   };
 
   return (
-    <div className="space-y-6 p-6 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
+    <div className="space-y-6 p-6 bg-white dark:bg-gray-800 rounded-lg shadow">
+      <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Settings</h2>
 
-      <div className="border-b border-gray-200 pb-4">
-        <h3 className="text-lg font-medium text-gray-900">Profile Information</h3>
-        <p className="mt-2 text-sm text-gray-600">View and update your account details.</p>
+      <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Profile Information</h3>
+        <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">View and update your account details.</p>
         <div className="mt-4 space-y-2">
-          <p className="text-sm text-gray-800"><strong>Role:</strong> {user?.role}</p>
-          <p className="text-sm text-gray-800"><strong>Department:</strong> {user?.department}</p>
+          <p className="text-sm text-gray-800 dark:text-gray-300"><strong>Role:</strong> {user?.role}</p>
+          <p className="text-sm text-gray-800 dark:text-gray-300"><strong>Department:</strong> {user?.department}</p>
         </div>
         <form onSubmit={handleSubmit} className="mt-4 space-y-4">
           <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-            <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Name</label>
+            <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} required className="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
           </div>
           <div>
-            <label htmlFor="contact" className="block text-sm font-medium text-gray-700">Contact</label>
-            <input type="text" name="contact" id="contact" value={formData.contact} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
+            <label htmlFor="contact" className="block text-sm font-medium text-gray-700 dark:text-gray-300">Contact</label>
+            <input type="text" name="contact" id="contact" value={formData.contact} onChange={handleChange} className="mt-1 block w-full rounded-md border-gray-300 dark:bg-gray-700 dark:border-gray-600 dark:text-white shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" />
           </div>
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
           {success && <p className="text-green-500 text-sm text-center">{success}</p>}
@@ -93,10 +94,10 @@ const Settings = () => {
         </form>
       </div>
 
-      <div className="border-b border-gray-200 pb-4">
-        <h3 className="text-lg font-medium text-gray-900">Application Preferences</h3>
+      <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white">Application Preferences</h3>
         <div className="mt-4 flex items-center justify-between">
-          <span className="text-sm font-medium text-gray-700">Dark Mode</span>
+          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
           <label htmlFor="darkModeToggle" className="relative inline-flex items-center cursor-pointer">
             <input type="checkbox" id="darkModeToggle" className="sr-only peer" checked={isDarkMode} onChange={toggleDarkMode} />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
