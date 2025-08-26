@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { getAllUsers, createUser, updateUser, deleteUser } from '../services/api';
+import { getAllUsers, createUser, updateUser, deleteUser, getAggregatedAnalytics } from '../services/api';
 import FormModal from '../components/FormModal';
 import EmployeeForm from '../components/EmployeeForm'; // Reusing EmployeeForm for user management
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
@@ -13,6 +13,10 @@ const SuperAdminDashboard = () => {
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingUser, setEditingUser] = useState(null);
+
+  const [analyticsData, setAnalyticsData] = useState(null);
+  const [loadingAnalytics, setLoadingAnalytics] = useState(true);
+  const [errorAnalytics, setErrorAnalytics] = useState(null);
 
   const fetchUsers = async () => {
     try {
@@ -29,8 +33,21 @@ const SuperAdminDashboard = () => {
   useEffect(() => {
     if (user?.role === 'superAdmin') {
       fetchUsers();
+      fetchAnalytics();
     }
   }, [user]);
+
+  const fetchAnalytics = async () => {
+    try {
+      setLoadingAnalytics(true);
+      const response = await getAggregatedAnalytics();
+      setAnalyticsData(response.data);
+    } catch (err) {
+      setErrorAnalytics(err.response?.data?.error || err.message);
+    } finally {
+      setLoadingAnalytics(false);
+    }
+  };
 
   const handleAddUser = () => {
     setEditingUser(null);
