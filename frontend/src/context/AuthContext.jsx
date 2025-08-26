@@ -68,6 +68,7 @@ export const AuthProvider = ({ children }) => {
     isInitialized,
     login,
     logout,
+    setUser,
   };
 
   return (
