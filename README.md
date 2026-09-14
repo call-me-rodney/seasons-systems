@@ -82,6 +82,18 @@ npm install
 npm run dev
 ```
 
+## 📊 Database Schema
+
+The system includes comprehensive tables for:
+- **Crops**: Planting, harvest, yield tracking
+- **Livestock**: Animal management, health monitoring
+- **Fields & Pens**: Land and enclosure management
+- **Equipment**: Tools, machinery, maintenance
+- **Inventory**: Stock management, pricing
+- **Sales**: Transaction tracking, analytics
+- **Suppliers**: Vendor management
+- **Employees**: Staff records, roles, departments
+- **Resupply**: Procurement requests, orders
 
 ## 🔐 Authentication & Security
 
