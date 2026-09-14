@@ -12,6 +12,13 @@ A comprehensive agribusiness management platform designed to streamline and digi
 - **Audit Logs** and data protection
 - **Real-time Features** powered by Redis
 
+## 🏗️ Architecture
+
+### Tech Stack
+- **Frontend**: React + Vite, Tailwind CSS, shadcn/ui, Axios, React Router
+- **Backend**: Node.js + Express, Sequelize (PostgreSQL), Redis
+- **AI**: Ollama (Docker)
+- **DevOps**: Docker Compose, Environment Variables
 
 ### Project Structure
 ```
