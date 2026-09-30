@@ -47,5 +47,6 @@ async function initializeModels() {
   return db; // Return the populated db object
 }
 
-// Export a promise that resolves with the db object
-export default initializeModels();
+// Export individual models
+export const { Crop,Employee,Equipment,Field,Inventory,Livestock,Pen,Resupply,Sales,SalesDetails,Supplier} = database
+export default database;
