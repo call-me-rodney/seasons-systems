@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as superAdminController from '../controllers/superAdminController.js';
+import { getAggregatedAnalytics } from '../controllers/analyticsController.js';
 import auth from '../middleware/auth.js';
 import role from '../middleware/role.js';
 
@@ -9,7 +10,7 @@ const router = Router();
 router.use(auth, role(['superAdmin']));
 
 router.get('/', superAdminController.getAllUsers);
-router.get('/analytics', superAdminController.getAggregatedAnalytics);
+router.get('/analytics', getAggregatedAnalytics);
 router.get('/:id', superAdminController.getUserById);
 router.post('/', superAdminController.createUser);
 router.put('/:id', superAdminController.updateUser);
