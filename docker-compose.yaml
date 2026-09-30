@@ -17,6 +17,7 @@ services:
       timeout: 5s
       retries: 5
 
+
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
@@ -31,6 +32,7 @@ services:
       timeout: 10s
       retries: 5
 
+  
   backend:
     build: ./backend
     container_name: backend
