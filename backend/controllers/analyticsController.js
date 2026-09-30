@@ -1,3 +1,7 @@
+import dbPromise from '../models/index.js';
+import logger from '../utils/logger.js';
+
+
 export const getAggregatedAnalytics = async (req, res) => {
   try {
     const [totalEmployees, activeEmployees, adminEmployees, totalCrops, growingCrops, totalLivestock, activeLivestock, totalFields, activeFields, totalPens, fullPens, totalEquipment, inUseEquipment, newEquipment, damagedEquipment, totalInventory, cropProduceInventory, meatProduceInventory, totalSales, totalSalesAmount, totalSuppliers, totalResupplies, pendingResupplies,] = await Promise.all([
