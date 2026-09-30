@@ -10,15 +10,15 @@ import SuperAdminDashboard from './pages/SuperAdminDashboard';
 
 // Protected Route component
 const ProtectedRoute = ({ children }) => {
-  const { user, loading, isInitialized } = useAuth();
+  // const { user, loading, isInitialized } = useAuth();
   
-  if (loading || !isInitialized) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  }
+  // if (loading || !isInitialized) {
+  //   return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  // }
   
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
+  // if (!user) {
+  //   return <Navigate to="/login" replace />;
+  // }
   
   return children;
 };
