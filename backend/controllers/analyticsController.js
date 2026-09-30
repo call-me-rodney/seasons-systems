@@ -29,6 +29,21 @@ export const metrics = [
   { name: 'totalResupplies',       query: () => Resupply.count() },
   { name: 'pendingResupplies',     query: () => Resupply.count({ where: { deliveryDate: null } }) },
 ];
-export const getAggregatedAnalytics = async (req, res) => {
-  
+
+
+export const buildAnalytics = async (metricList) => {
+  const values = await Promise.all(metricList.map((metric) => metric.query()));
+  return Object.fromEntries(metricList.map((metric, i) => [metric.name, values[i]]));
 };
+
+export const createAnalyticsHandler = (metricList) => async (req, res) => {
+  try {
+    res.json(await buildAnalytics(metricList));
+    logger.info('Aggregated analytics retrieved successfully');
+  } catch (error) {
+    logger.error(`Error retrieving aggregated analytics: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getAggregatedAnalytics = createAnalyticsHandler(metrics);
