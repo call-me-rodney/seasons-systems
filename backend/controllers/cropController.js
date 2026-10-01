@@ -1,5 +1,8 @@
-import { crop } from '../models/index.js';
+import dbPromise from '../models/index.js';
 import logger from '../utils/logger.js';
+
+const db = await dbPromise;
+const { Crop } = db;
 
 export const getAll = async (req, res) => {
   try {
