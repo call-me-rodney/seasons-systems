@@ -9,14 +9,22 @@ dotenv.config({
   path: path.resolve(__dirname, '../../.env')
 });
 
+const databaseUrl = process.env.DATABASE_URL;
+const databaseUrlOptions = databaseUrl ? new URL(databaseUrl) : null;
+const useDatabaseSsl = process.env.DATABASE_SSL === 'true' ||
+  databaseUrlOptions?.searchParams.get('sslmode') === 'require' ||
+  databaseUrlOptions?.searchParams.get('sslmode') === 'verify-full';
+
 const configs = {
   // Database Configuration
   database: {
-    url: process.env.DATABASE_URL,
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
+    url: databaseUrl,
+    ssl: useDatabaseSsl
+      ? {
+          require: true,
+          rejectUnauthorized: false
+        }
+      : undefined
   },
 
   // Redis Configuration

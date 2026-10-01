@@ -19,6 +19,7 @@ const sequelize = new Sequelize(configs.database.url, {
 async function initializeModels() {
   const files = fs
     .readdirSync(__dirname)
+    .sort()
     .filter(file => {
       return (
         file.indexOf('.') !== 0 &&
@@ -44,7 +45,7 @@ async function initializeModels() {
   db.sequelize = sequelize;
   db.Sequelize = Sequelize;
 
-  return db; // Return the populated db object
+  return db;
 }
 
 // Export a promise that resolves with the db object
