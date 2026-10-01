@@ -1,91 +1,59 @@
-import dbPromise from '../models/index.js';
+import * as employeeService from '../services/employeeService-SOLID.js';
 import logger from '../utils/logger.js';
-import bcrypt from 'bcrypt';
-import configs from '../configs/configs.js';
 
-const db = await dbPromise;
-const { Employee } = db;
+const fail = (res, error) => {
+  logger.error(error.message);
+  res.status(500).json({ error: error.message });
+};
 
 export const getAll = async (req, res) => {
   try {
-    const employees = await Employee.findAll();
-    res.json(employees);
+    res.json(await employeeService.findAll());          // no password hashes
     logger.info('All employees retrieved successfully');
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(error.message);
+    fail(res, error);
   }
 };
 
 export const getById = async (req, res) => {
   try {
-    const employee = await Employee.findByPk(req.params.id);
-    if (employee) {
-      res.json(employee);
-      logger.info(`Employee with id ${req.params.id} retrieved successfully`);
-    } else {
-      res.status(404).json({ error: 'Employee not found' });
-      logger.error(`Employee with id ${req.params.id} not found`);
-    }
+    const employee = await employeeService.findById(req.params.id);
+    if (!employee) return res.status(404).json({ error: 'Employee not found' });
+    res.json(employee);                                  // no password hash
+    logger.info(`Employee with id ${req.params.id} retrieved successfully`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(error.message);
+    fail(res, error);
   }
 };
 
 export const create = async (req, res) => {
   try {
-    const { password, ...employeeData } = req.body;
-    
-    // Hash the password if provided
-    if (password) {
-      const hashedPassword = await bcrypt.hash(password, configs.auth.bcryptSaltRounds);
-      employeeData.password = hashedPassword;
-    }
-    
-    const employee = await Employee.create(employeeData);
-    
-    // Remove password from response for security
-    const { password: _, ...employeeResponse } = employee.toJSON();
-    
-    res.status(201).json(employeeResponse);
+    res.status(201).json(await employeeService.create(req.body));
     logger.info('Employee created successfully');
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(error.message);
+    fail(res, error);
   }
 };
 
 export const update = async (req, res) => {
   try {
-    const employee = await Employee.findByPk(req.params.id);
-    if (employee) {
-      await employee.update(req.body);
-      res.json(employee);
-      logger.info(`Employee with id ${req.params.id} updated successfully`);
-    } else {
-      res.status(404).json({ error: 'Employee not found' });
-      logger.error(`Employee with id ${req.params.id} not found`);
-    }
+    // Same rules as create(): password is hashed, response is sanitized.
+    const employee = await employeeService.update(req.params.id, req.body);
+    if (!employee) return res.status(404).json({ error: 'Employee not found' });
+    res.json(employee);
+    logger.info(`Employee with id ${req.params.id} updated successfully`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(error.message);
+    fail(res, error);
   }
 };
 
 export const remove = async (req, res) => {
   try {
-    const employee = await Employee.findByPk(req.params.id);
-    if (employee) {
-      await employee.destroy();
-      res.status(204).send();
-      logger.info(`Employee with id ${req.params.id} deleted successfully`);
-    } else {
-      res.status(404).json({ error: 'Employee not found' });
-      logger.error(`Employee with id ${req.params.id} not found`);
-    }
+    const deleted = await employeeService.remove(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'Employee not found' });
+    res.status(204).send();
+    logger.info(`Employee with id ${req.params.id} deleted successfully`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(error.message);
+    fail(res, error);
   }
 };

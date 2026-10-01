@@ -1,8 +1,5 @@
-import dbPromise from '../models/index.js';
+import { Livestock } from '../models/index.js'
 import logger from '../utils/logger.js';
-
-const db = await dbPromise;
-const { Livestock } = db;
 
 export const getAll = async (req, res) => {
   try {
