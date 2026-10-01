@@ -1,8 +1,5 @@
-import dbPromise from '../models/index.js';
 import logger from '../utils/logger.js';
-
-const db = await dbPromise;
-const { Employee, Crop, Livestock, Field, Pen, Equipment, Inventory, Sales, SalesDetails, Supplier, Resupply } = db;
+import { Employee, Crop, Livestock, Field, Pen, Equipment, Inventory, Sales, SalesDetails, Supplier, Resupply } from '../models/index.js';
 
 export const metrics = [
   { name: 'totalEmployees',        query: () => Employee.count() },
