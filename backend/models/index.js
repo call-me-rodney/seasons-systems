@@ -27,3 +27,12 @@ const definers = [
   defineSalesDetails,
   defineSupplier,
 ];
+
+const registry = {};
+for (const define of definers) {
+  const model = define(sequelize, Sequelize.DataTypes);
+  registry[model.name] = model;
+}
+for (const model of Object.values(registry)) {
+  if (model.associate) model.associate(registry);
+}
