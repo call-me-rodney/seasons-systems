@@ -13,4 +13,17 @@ import defineSales from './sales.js';
 import defineSalesDetails from './salesdetails.js';
 import defineSupplier from './supplier.js';
 
-
+// --- Explicit registration (no directory scanning) --------------------------
+const definers = [
+  defineCrop,
+  defineEmployee,
+  defineEquipment,
+  defineField,
+  defineInventory,
+  defineLivestock,
+  definePen,
+  defineResupply,
+  defineSales,
+  defineSalesDetails,
+  defineSupplier,
+];
