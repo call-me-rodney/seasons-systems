@@ -13,6 +13,13 @@ import defineSales from './sales.js';
 import defineSalesDetails from './salesdetails.js';
 import defineSupplier from './supplier.js';
 
+// --- Infrastructure interface (for server.js, not for controllers) ----------
+export const sequelize = new Sequelize(configs.database.url, {
+  dialect: 'postgres',
+  logging: false,
+  dialectOptions: configs.database.ssl,
+});
+
 // --- Explicit registration (no directory scanning) --------------------------
 const definers = [
   defineCrop,
