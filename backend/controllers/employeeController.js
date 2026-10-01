@@ -1,4 +1,4 @@
-import * as employeeService from '../services/employeeService-SOLID.js';
+import * as employeeService from '../services/employeeService.js';
 import logger from '../utils/logger.js';
 
 const fail = (res, error) => {

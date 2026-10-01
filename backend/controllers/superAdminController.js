@@ -1,105 +1,63 @@
-import dbPromise from '../models/index.js';
+import * as employeeService from '../services/employeeService.js';
 import logger from '../utils/logger.js';
-import bcrypt from 'bcrypt';
-import configs from '../configs/configs.js';
 
-const db = await dbPromise;
-const { Employee, Crop, Livestock, Field, Pen, Equipment, Inventory, Sales, SalesDetails, Supplier, Resupply } = db;
+// Only these fields may be set when a super admin creates an account.
+const pickNewUserFields = ({ name, password, role, department, dateOfHire, contact }) =>
+  ({ name, password, role, department, dateOfHire, contact });
+
+const fail = (res, error, context) => {
+  logger.error(`${context}: ${error.message}`);
+  res.status(500).json({ error: error.message });
+};
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await Employee.findAll({
-      attributes: { exclude: ['password'] } // Exclude password from results
-    });
-    res.json(users);
-    logger.info('All users retrieved by super admin successfully');
+    res.json(await employeeService.findAll());
+    logger.info('All users retrieved by super admin');
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(`Error retrieving all users: ${error.message}`);
+    fail(res, error, 'Error retrieving all users');
   }
 };
 
 export const getUserById = async (req, res) => {
   try {
-    const user = await Employee.findByPk(req.params.id, {
-      attributes: { exclude: ['password'] }
-    });
-    if (user) {
-      res.json(user);
-      logger.info(`User with id ${req.params.id} retrieved by super admin successfully`);
-    } else {
-      res.status(404).json({ error: 'User not found' });
-      logger.error(`User with id ${req.params.id} not found by super admin`);
-    }
+    const user = await employeeService.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+    logger.info(`User ${req.params.id} retrieved by super admin`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(`Error retrieving user by id: ${error.message}`);
+    fail(res, error, 'Error retrieving user by id');
   }
 };
 
 export const createUser = async (req, res) => {
   try {
-    const { name, password, role, department, dateOfHire, contact } = req.body;
-    const hashedPassword = await bcrypt.hash(password, configs.auth.bcryptSaltRounds);
-    const newUser = await Employee.create({
-      name,
-      password: hashedPassword,
-      role,
-      department,
-      dateOfHire,
-      contact,
-      isActive: true,
-    });
-    res.status(201).json({ message: 'User created successfully', user: { id: newUser.employeeID, name: newUser.name, role: newUser.role, department: newUser.department } });
-    logger.info(`User ${newUser.name} created by super admin successfully`);
+    const user = await employeeService.create(pickNewUserFields(req.body));
+    res.status(201).json(user);
+    logger.info(`User ${user.name} created by super admin`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(`Error creating user: ${error.message}`);
+    fail(res, error, 'Error creating user');
   }
 };
 
 export const updateUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const { password, ...updateData } = req.body;
-
-    const user = await Employee.findByPk(id);
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      logger.error(`User with id ${id} not found for update by super admin`);
-      return;
-    }
-
-    if (password) {
-      updateData.password = await bcrypt.hash(password, configs.auth.bcryptSaltRounds);
-    }
-
-    await user.update(updateData);
-    res.json({ message: 'User updated successfully', user: { id: user.employeeID, name: user.name, role: user.role, department: user.department } });
-    logger.info(`User with id ${id} updated by super admin successfully`);
+    const user = await employeeService.update(req.params.id, req.body);
+    if (!user) return res.status(404).json({ error: 'User not found' });
+    res.json(user);
+    logger.info(`User ${req.params.id} updated by super admin`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(`Error updating user: ${error.message}`);
+    fail(res, error, 'Error updating user');
   }
 };
 
 export const deleteUser = async (req, res) => {
   try {
-    const { id } = req.params;
-    const user = await Employee.findByPk(id);
-    if (!user) {
-      res.status(404).json({ error: 'User not found' });
-      logger.error(`User with id ${id} not found for deletion by super admin`);
-      return;
-    }
-
-    await user.destroy();
+    const deleted = await employeeService.remove(req.params.id);
+    if (!deleted) return res.status(404).json({ error: 'User not found' });
     res.status(204).send();
-    logger.info(`User with id ${id} deleted by super admin successfully`);
+    logger.info(`User ${req.params.id} deleted by super admin`);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-    logger.error(`Error deleting user: ${error.message}`);
+    fail(res, error, 'Error deleting user');
   }
 };
-
-
