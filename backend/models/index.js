@@ -36,3 +36,16 @@ for (const define of definers) {
 for (const model of Object.values(registry)) {
   if (model.associate) model.associate(registry);
 }
+
+// --- Segregated model interfaces: import only the ones you need -------------
+export const Crop = registry.Crop;
+export const Employee = registry.Employee;
+export const Equipment = registry.Equipment;
+export const Field = registry.Field;
+export const Inventory = registry.Inventory;
+export const Livestock = registry.Livestock;
+export const Pen = registry.Pen;
+export const Resupply = registry.Resupply;
+export const Sales = registry.Sales;
+export const SalesDetails = registry.SalesDetails;
+export const Supplier = registry.Supplier;
