@@ -11,10 +11,6 @@ const DATABASE_RETRY_DELAY_MS = 2000;
 const wait = delay => new Promise(resolve => setTimeout(resolve, delay));
 
 async function connectDatabase(sequelize) {
-  if (!configs.database.url) {
-    throw new Error('DATABASE_URL is not configured. Add it to the root .env file.');
-  }
-
   for (let attempt = 1; attempt <= DATABASE_RETRY_ATTEMPTS; attempt += 1) {
     try {
       await sequelize.authenticate();
@@ -36,10 +32,14 @@ async function connectDatabase(sequelize) {
 }
 
 (async () => {
-  const dbModule = await import('./models/index.js');
-  const db = await dbModule.default; // Await the promise
-  const { sequelize } = db;
   try {
+    if (!configs.database.url) {
+      throw new Error('DATABASE_URL is not configured. Add it to the root .env file.');
+    }
+
+    // Imported here, after the config check: models/index.js creates the
+    // Sequelize instance at load time and would throw on a missing URL.
+    const { sequelize } = await import('./models/index.js');
     await connectDatabase(sequelize);
     const server = app.listen(PORT, () => {
       logger.info(`Server running on port ${PORT}`);

@@ -2,10 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import configs from '../configs/configs.js';
 import logger from '../utils/logger.js';
-import dbPromise from '../models/index.js';
-
-const db = await dbPromise;
-const { Employee } = db;
+import { Employee } from '../models/index.js';
 
 export default {
   async login(req, res) {

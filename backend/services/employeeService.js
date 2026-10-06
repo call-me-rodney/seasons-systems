@@ -1,32 +1,6 @@
-/*
- * ============================================================================
- *  SOLID DEMO — supporting file for S (SRP) and L (LSP)
- *  New file (no original): extracted from superAdminController.js and
- *  employeeController.js
- * ============================================================================
- *
- *  WHY THIS FILE EXISTS
- *  --------------------
- *  In the original code, "how an employee account is stored" was written
- *  three separate times, each slightly differently:
- *
- *    - superAdminController.createUser  -> hashes password, hides it in reply
- *    - superAdminController.updateUser  -> hashes password, hides it in reply
- *    - employeeController.create        -> hashes password, hides it in reply
- *    - employeeController.update        -> DOES NOT hash (stores plaintext!)
- *    - employeeController.getAll/getById-> DOES NOT hide the password hash
- *
- *  This service owns ONE responsibility — the business rules for employee
- *  accounts — so the controllers can own ONE responsibility: HTTP.
- *  Because both controllers now call the same rules, they behave the same
- *  way (see employeeController-SOLID.js for the Liskov discussion).
- *
- *  The service knows nothing about `req`, `res`, or status codes.
- * ============================================================================
- */
 import bcrypt from 'bcrypt';
 import configs from '../configs/configs.js';
-import { Employee } from '../models/index-SOLID.mjs';
+import { Employee } from '../models/index.js';
 
 const HIDDEN_FIELDS = ['password'];
 
