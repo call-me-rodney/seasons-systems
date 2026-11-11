@@ -2,7 +2,7 @@ import app from './app.js';
 import configs from './configs/configs.js';
 import logger from './utils/logger.js';
 import { WebSocketServer } from 'ws';
-// import redisClient from './configs/redis.js'; // Import redisClient
+import redisClient from './configs/redis.js'; // Import redisClient
 
 const PORT = configs.server.port;
 const DATABASE_RETRY_ATTEMPTS = 5;
@@ -49,17 +49,17 @@ async function connectDatabase(sequelize) {
     const wss = new WebSocketServer({ server });
 
     // Redis Subscriber
-    // const subscriber = redisClient.duplicate();
-    // await subscriber.connect(); // Connect the subscriber
-    // await subscriber.subscribe('chat_messages', (message, channel) => {
-    //   logger.info(`Received message from Redis channel ${channel}: ${message}`);
-    //   // Broadcast message to all connected WebSocket clients
-    //   wss.clients.forEach(client => {
-    //     if (client.readyState === client.OPEN) {
-    //       client.send(message);
-    //     }
-    //   });
-    // });
+    const subscriber = redisClient.duplicate();
+    await subscriber.connect(); // Connect the subscriber
+    await subscriber.subscribe('chat_messages', (message, channel) => {
+      logger.info(`Received message from Redis channel ${channel}: ${message}`);
+      // Broadcast message to all connected WebSocket clients
+      wss.clients.forEach(client => {
+        if (client.readyState === client.OPEN) {
+          client.send(message);
+        }
+      });
+    });
 
     wss.on('connection', ws => {
       logger.info('Client connected to WebSocket');
