@@ -2,7 +2,6 @@ import express from 'express';
 const router = express.Router();
 
 import auth from './auth.js'
-import employee from './employee.js'
 import crop from './crop.js'
 import livestock from './livestock.js'
 import field from './field.js'
@@ -17,7 +16,6 @@ import planner from './planner.js'
 import superAdmin from './superAdmin.js'
 
 router.use('/auth', auth);
-router.use('/employees', employee);
 router.use('/crops', crop);
 router.use('/livestock', livestock);
 router.use('/fields', field);

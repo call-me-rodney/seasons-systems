@@ -40,6 +40,7 @@ export default (sequelize, DataTypes) => {
   }, {
     tableName: 'employees',
     timestamps: true,
+    defaultScope: { attributes: { exclude: ['password'] } },
   });
 
   Employee.associate = function(models) {

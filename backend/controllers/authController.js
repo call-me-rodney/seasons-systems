@@ -7,7 +7,7 @@ import { Employee } from '../models/index.js';
 export default {
   async login(req, res) {
     const { name, password } = req.body;
-    const user = await Employee.findOne({ where: { name } });
+    const user = await Employee.unscoped().findOne({ where: { name } });
     if (!user) {
       logger.error('Invalid credentials: User does not exist!');
       return res.status(401).json({ error: 'Invalid credentials: User does not exist!' });

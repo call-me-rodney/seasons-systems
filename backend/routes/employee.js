@@ -4,13 +4,20 @@ import auth from '../middleware/auth.js';
 import role from '../middleware/role.js';
 import department from '../middleware/department.js';
 
-const router = Router();
+export const createAccountRoutes = ({ controller, guards = [] }) => {
+	const router = Router();
+	router.use(...guards);
+	router.get('/', controller.getAll);
+	router.get('/:id', controller.getById);
+	router.post('/', controller.create);
+	router.put('/:id', controller.update);
+	router.delete('/:id', controller.remove);
+	return router;
+};
 
-// departments: HR
-router.get('/', auth, department('HR'), role(['admin']), employeeController.getAll);
-router.get('/:id', auth, department('HR'), role(['admin']), employeeController.getById);
-router.post('/', auth, department('HR'), role(['admin']), employeeController.create);
-router.put('/:id', auth, department('HR'), role(['admin']), employeeController.update);
-router.delete('/:id', auth, department('HR'), role(['admin']), employeeController.remove);
+const router = createAccountRoutes({
+	controller: employeeController,
+	guards: [auth, department('HR'), role(['admin'])],
+});
 
 export default router;

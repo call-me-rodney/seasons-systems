@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
+import routes from './routes/index.js';
+import { employeeRouter, superAdminRouter, errorHandler } from './compositionRoot.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,7 +21,9 @@ app.get('/health', (req, res) => {
 });
 
 // API routes
-import routes from './routes/index.js';
+app.use('/api/employees', employeeRouter);
+app.use('/api/super-admin/users', superAdminRouter);
 app.use('/api', routes);
+app.use(errorHandler);
 
 export default app;
