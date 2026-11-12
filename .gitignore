@@ -109,3 +109,4 @@ storybook-static/
 
 # editor directories
 .qodo
+dependency-check-report.html

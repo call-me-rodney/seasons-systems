@@ -1,0 +1,141 @@
+Before report: backend tests
+Commit: cf51485 (plus uncommitted test/lint setup)
+Date: 2026-11-12
+Node: v24.18.0   Runner: node:test + supertest 7.3.2
+Database: local PostgreSQL test database (config/config.json 'test' entry)
+Command: npm test
+
+
+> backend@1.0.0 test
+> node --import ./test/setup.js --test "test/**/*.test.js"
+
+[dotenv@17.2.1] injecting env (13) from ..\.env -- tip: ⚙️  enable debug logging with { debug: true }
+▶ GET /health
+  ✔ reports ok without authentication (46.1494ms)
+✔ GET /health (47.3143ms)
+▶ authentication on protected routes
+  ✔ GET /api/employees without a token returns 401 (8.0239ms)
+  ✔ GET /api/crops without a token returns 401 (3.8998ms)
+  ✔ GET /api/livestock without a token returns 401 (4.0876ms)
+  ✔ GET /api/fields without a token returns 401 (3.5936ms)
+  ✔ GET /api/pens without a token returns 401 (3.7607ms)
+  ✔ GET /api/equipment without a token returns 401 (4.0875ms)
+  ✔ GET /api/inventory without a token returns 401 (3.9989ms)
+  ✔ GET /api/sales without a token returns 401 (5.3839ms)
+  ✔ GET /api/salesdetails without a token returns 401 (4.465ms)
+  ✔ GET /api/suppliers without a token returns 401 (4.7636ms)
+  ✔ GET /api/resupplies without a token returns 401 (3.0879ms)
+  ✔ GET /api/super-admin without a token returns 401 (2.7864ms)
+  ✔ a malformed token returns 403 (3.9701ms)
+  ✔ a token signed with the wrong secret returns 403 (5.6081ms)
+✔ authentication on protected routes (62.8282ms)
+▶ authorization on protected routes
+  ✔ a user from another department cannot read crops (4.6893ms)
+  ✔ a plain user cannot delete a crop (3.8395ms)
+  ✔ an admin cannot reach super-admin routes (3.5419ms)
+  ✔ a plain user cannot use the planner (18.1526ms)
+✔ authorization on protected routes (30.5548ms)
+▶ employeeService.toPublic
+  ✔ removes the password hash and keeps other fields (0.2636ms)
+  ✔ returns null for a missing employee (0.0701ms)
+✔ employeeService.toPublic (0.4354ms)
+[dotenv@17.2.1] injecting env (13) from ..\.env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+2026-11-12 01:48:04 info: User test-1794437284309-login logged in successfully
+▶ POST /api/auth/login
+  ✔ returns a token and the public user for valid credentials (88.1758ms)
+2026-11-12 01:48:04 error: Invalid credentials: Incorrect password!
+  ✔ rejects a wrong password with 401 (58.7644ms)
+2026-11-12 01:48:04 error: Invalid credentials: User does not exist!
+  ✔ rejects an unknown user with 401 (4.7153ms)
+2026-11-12 01:48:04 info: User test-1794437284309-login logged in successfully
+2026-11-12 01:48:04 info: All employees retrieved successfully
+  ✔ the issued token is accepted by a protected route (65.673ms)
+✔ POST /api/auth/login (464.4977ms)
+2026-11-12 01:48:04 info: Employee created successfully
+▶ /api/employees (HR admin)
+  ✔ POST creates an employee, hashes the password and hides it (65.0321ms)
+2026-11-12 01:48:04 info: All employees retrieved successfully
+  ✔ GET / lists employees without any password field (4.2092ms)
+2026-11-12 01:48:04 info: Employee with id 5 retrieved successfully
+  ✔ GET /:id returns the employee without the password (4.1652ms)
+  ✔ GET /:id returns 404 for a missing employee (4.4571ms)
+2026-11-12 01:48:04 info: Employee with id 5 updated successfully
+  ✔ PUT /:id updates ordinary fields (6.9002ms)
+2026-11-12 01:48:04 info: Employee with id 5 updated successfully
+  ✔ PUT /:id hashes a changed password (60.4382ms)
+  ✔ PUT /:id returns 404 for a missing employee (3.3855ms)
+2026-11-12 01:48:04 info: Employee with id 5 updated successfully
+  ⚠ PUT /:id must not let an HR admin change a role (7.1377ms) # TODO
+2026-11-12 01:48:04 info: Employee with id 5 deleted successfully
+  ✔ DELETE /:id removes the employee (8.7222ms)
+  ✔ DELETE /:id returns 404 once the employee is gone (3.5866ms)
+✔ /api/employees (HR admin) (168.7143ms)
+2026-11-12 01:48:05 info: User test-1794437284309-super created by super admin
+▶ /api/super-admin
+  ✔ POST creates a user and ignores fields outside the whitelist (59.3191ms)
+2026-11-12 01:48:05 info: All users retrieved by super admin
+  ✔ GET / lists users without any password field (3.6237ms)
+2026-11-12 01:48:05 info: Aggregated analytics retrieved successfully
+  ✔ GET /analytics responds for a super admin (29.2057ms)
+✔ /api/super-admin (92.6174ms)
+2026-11-12 01:48:05 info: Crop created successfully
+▶ /api/crops
+  ✔ POST creates a crop with default status (11.3601ms)
+2026-11-12 01:48:05 error: notNull Violation: Crop.type cannot be null,
+notNull Violation: Crop.plantingDate cannot be null,
+notNull Violation: Crop.expectedHarvestDate cannot be null
+  ✔ POST without required fields is rejected and stores nothing (9.2674ms)
+2026-11-12 01:48:05 info: All crops retrieved successfully
+  ✔ GET / includes the new crop (5.6458ms)
+2026-11-12 01:48:05 info: Crop with id 2 retrieved successfully
+  ✔ GET /:id returns the crop (6.4226ms)
+2026-11-12 01:48:05 error: Crop with id 2147483000 not found
+  ✔ GET /:id returns 404 for a missing crop (6.2386ms)
+2026-11-12 01:48:05 info: Crop with id 2 updated successfully
+  ✔ PUT /:id updates the crop (10.8319ms)
+  ✔ DELETE /:id is refused for a plain user and keeps the crop (7.725ms)
+2026-11-12 01:48:05 info: Crop with id 2 deleted successfully
+  ✔ DELETE /:id by an admin removes the crop (7.8788ms)
+✔ /api/crops (66.0707ms)
+▶ role middleware
+  ✔ rejects a request with no authenticated user (0.8893ms)
+  ✔ allows a user whose role is in the allowed list (0.1921ms)
+  ✔ rejects a user whose role is not in the allowed list (0.1301ms)
+  ✔ always allows a superAdmin (0.1496ms)
+✔ role middleware (2.6407ms)
+▶ department middleware
+  ✔ rejects a request with no authenticated user (0.2306ms)
+  ✔ allows a user from the matching department (0.161ms)
+  ✔ rejects a user from another department (0.1532ms)
+  ✔ always allows a superAdmin (0.1836ms)
+✔ department middleware (1.0305ms)
+ℹ tests 54
+ℹ suites 10
+ℹ pass 53
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 1
+ℹ duration_ms 2182.7251
+
+✖ failing tests:
+
+test at test\db.test.js:171:3
+⚠ PUT /:id must not let an HR admin change a role (7.1377ms) # TODO
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'superAdmin'
+  - 'user'
+  
+      at TestContext.<anonymous> (backend/test/db.test.js:177:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1332:7)
+      at async Suite.processPendingSubtests (node:internal/test_runner/test:911:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'superAdmin',
+    expected: 'user',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

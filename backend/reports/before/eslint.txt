@@ -1,0 +1,49 @@
+Before report: backend ESLint
+Commit: cf51485 (plus uncommitted test/lint setup)
+Date: 2026-11-12
+Tool: ESLint v10.14.0   Config: backend/eslint.config.js (@eslint/js recommended, Node globals)
+Scope: backend/ excluding node_modules, coverage, reports
+Command: npm run lint
+
+
+backend\app.js
+  7:7  error  '__dirname' is assigned a value but never used  no-unused-vars
+
+backend\migrations\20250821235508-create-field.cjs
+  48:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235510-create-employee.cjs
+  56:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235549-create-pen.cjs
+  48:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235600-create-crop.cjs
+  68:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235620-create-supplier.cjs
+  40:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235630-create-equipment.cjs
+  59:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235650-create-livestock.cjs
+  60:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235700-create-inventory.cjs
+  62:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235710-create-salesdetails.cjs
+  47:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235720-create-sales.cjs
+  42:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\migrations\20250821235730-create-resupply.cjs
+  62:30  error  'Sequelize' is defined but never used  no-unused-vars
+
+backend\services\ollamaService.js
+  18:5  error  There is no `cause` attached to the symptom error being thrown  preserve-caught-error
+
+✖ 13 problems (13 errors, 0 warnings)
+
